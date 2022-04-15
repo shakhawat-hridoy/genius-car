@@ -1,6 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../Register/Register.css";
+import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+import auth from "../../../firebase.init";
 
 const Register = (event) => {
   const navigate = useNavigate();
@@ -8,11 +10,16 @@ const Register = (event) => {
     navigate("/login");
   };
 
+  const [createUserWithEmailAndPassword, user, loading, error] =
+    useCreateUserWithEmailAndPassword(auth);
+
   const handleRegister = (event) => {
     event.preventDefault();
-    const name = event.target.name.value;
+    //const name = event.target.name.value;
     const email = event.target.email.value;
     const password = event.target.password.value;
+
+    createUserWithEmailAndPassword(email, password);
   };
   return (
     // Our own created form for learning environment variable
